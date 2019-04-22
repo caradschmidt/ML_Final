@@ -1,0 +1,84 @@
+---
+title: "ML_Final"
+author: "caradschmidt"
+date: "4/21/2019"
+output: html_document
+---
+
+## R Markdown
+
+This exercise used data of Six young health participants were asked to perform one set of 10 repetitions of the Unilateral Dumbbell Biceps Curl in five different fashions.  The goal is to use machine learning to predict according to the specification (Class A), throwing the elbows to the front (Class B), lifting the dumbbell only halfway (Class C), lowering the dumbbell only halfway (Class D) and throwing the hips to the front (Class E).
+
+Participants were supervised by an experienced weight lifter to make sure the execution complied to the manner they were supposed to simulate. The exercises were performed by six male participants aged between 20-28 years, with little weight lifting experience. We made sure that all participants could easily simulate the mistakes in a safe and controlled manner by using a relatively light dumbbell (1.25kg).
+
+For more information, see:
+Velloso, E.; Bulling, A.; Gellersen, H.; Ugulino, W.; Fuks, H. Qualitative Activity Recognition of Weight Lifting Exercises. Proceedings of 4th International Conference in Cooperation with SIGCHI (Augmented Human '13) . Stuttgart, Germany: ACM SIGCHI, 2013. 
+
+## Data Prepraration
+
+We download the data and remove all columns that contain NAs or blanks.  This reducs the number of features from 160 to 53.
+
+```{r}
+library(dplyr)
+library(caret)
+library(rpart)
+library(randomForest)
+train<-read.csv("https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv")
+test<-read.csv("https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv")
+remove_nas<-sapply(train, function(x) any(is.na(x)))
+remove_blanks<-sapply(train, function(x) "" %in% levels(x))
+train1<-train[,-which(remove_nas | remove_blanks)]
+train1<-train1[,-c(1:7)]
+```
+
+## Model Learning
+
+We begin by splitting the training data into training and test sets, so we can determine the accuracy of our models.
+```{r}
+intrain<-createDataPartition(train1$classe, p=0.7, list=FALSE)
+training<-train1[intrain,]
+testing<-train1[-intrain,]
+```
+
+We first fit a classification tree using rpart. The accuracy is ~0.75, making the out-of-sample error roughly 0.25.  
+
+```{r}
+set.seed(99)
+fit<-rpart(classe~., data=training, method="class")
+predict_rpart<-predict(fit, newdata = testing, type = "class")
+confusionMatrix(predict_rpart, testing$classe)
+```
+
+We use varImp() to examine the importance of each variable to the model.  
+
+```{r}
+varImp(fit)
+```
+
+We find several variables that do not contribute to the tree at all, so we prune those.  We then refit the model, the accuracy is actually reduced to ~0.71.
+
+```{r}
+train2<-select(train1,-c("gyros_belt_x", "accel_belt_x", "pitch_arm", "total_accel_arm", "gyros_arm_y", "gyros_arm_z", "accel_arm_y", "accel_arm_z", "magnet_arm_z", "gyros_dumbbell_x", "gyros_dumbbell_y", "gyros_dumbbell_z", "gyros_forearm_x", "gyros_forearm_y", "gyros_forearm_z"))
+intrain2<-createDataPartition(train2$classe, p=0.7, list=FALSE)
+training2<-train2[intrain2,]
+testing2<-train2[-intrain2,]
+fit2<-rpart(classe~., data=training2, method="class")
+predict_rpart2<-predict(fit2, newdata = testing2, type = "class")
+confusionMatrix(predict_rpart2, testing2$classe)
+```
+
+Next, we fit a random forest model using the training data set that includes the 53 features.  The resulting model has a accuracy of ~0.99, making the out-of-sample error <0.01.
+
+```{r}
+fit_rf<-randomForest(classe~., data=training, importance=FALSE)
+predict_rf<-predict(fit_rf, newdata = testing)
+confusionMatrix(predict_rf, testing$classe)
+```
+
+## Prediction for Test Results
+
+We use the random forest model to generate predictions for the given test set of 20 observations
+
+```{r}
+predict(fit_rf, newdata = test)
+```
