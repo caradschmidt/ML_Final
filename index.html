@@ -433,69 +433,68 @@ confusionMatrix(predict_rpart, testing$classe)</code></pre>
 ## 
 ##           Reference
 ## Prediction    A    B    C    D    E
-##          A 1331  137   14   25   11
-##          B   74  680  103   97   96
-##          C   50   89  755  141  122
-##          D  197  203  122  661  171
-##          E   22   30   32   40  682
+##          A 1520  183   69  127   27
+##          B   52  725   87   96   97
+##          C   41   88  780  141  140
+##          D   30   83   62  511   43
+##          E   31   60   28   89  775
 ## 
 ## Overall Statistics
-##                                           
-##                Accuracy : 0.6982          
-##                  95% CI : (0.6863, 0.7099)
-##     No Information Rate : 0.2845          
-##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
-##                                           
-##                   Kappa : 0.6204          
-##                                           
-##  Mcnemar&#39;s Test P-Value : &lt; 2.2e-16       
+##                                          
+##                Accuracy : 0.7325         
+##                  95% CI : (0.721, 0.7438)
+##     No Information Rate : 0.2845         
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16      
+##                                          
+##                   Kappa : 0.6597         
+##                                          
+##  Mcnemar&#39;s Test P-Value : &lt; 2.2e-16      
 ## 
 ## Statistics by Class:
 ## 
 ##                      Class: A Class: B Class: C Class: D Class: E
-## Sensitivity            0.7951   0.5970   0.7359   0.6857   0.6303
-## Specificity            0.9556   0.9220   0.9173   0.8592   0.9742
-## Pos Pred Value         0.8768   0.6476   0.6525   0.4882   0.8462
-## Neg Pred Value         0.9215   0.9051   0.9427   0.9331   0.9212
-## Prevalence             0.2845   0.1935   0.1743   0.1638   0.1839
-## Detection Rate         0.2262   0.1155   0.1283   0.1123   0.1159
-## Detection Prevalence   0.2579   0.1784   0.1966   0.2301   0.1370
-## Balanced Accuracy      0.8753   0.7595   0.8266   0.7724   0.8022</code></pre>
+## Sensitivity            0.9080   0.6365   0.7602  0.53008   0.7163
+## Specificity            0.9036   0.9300   0.9156  0.95570   0.9567
+## Pos Pred Value         0.7892   0.6859   0.6555  0.70096   0.7884
+## Neg Pred Value         0.9611   0.9143   0.9476  0.91214   0.9374
+## Prevalence             0.2845   0.1935   0.1743  0.16381   0.1839
+## Detection Rate         0.2583   0.1232   0.1325  0.08683   0.1317
+## Detection Prevalence   0.3273   0.1796   0.2022  0.12387   0.1670
+## Balanced Accuracy      0.9058   0.7833   0.8379  0.74289   0.8365</code></pre>
 <p>We use varImp() to examine the importance of each variable to the model.</p>
 <pre class="r"><code>varImp(fit)</code></pre>
 <pre><code>##                         Overall
-## accel_arm_x           481.67250
-## accel_arm_y            64.47146
-## accel_belt_y          102.63926
-## accel_belt_z          772.14783
-## accel_dumbbell_x       63.55320
-## accel_dumbbell_y     1331.95931
-## accel_dumbbell_z      127.14564
-## accel_forearm_x       743.77428
-## accel_forearm_z       113.44622
-## gyros_arm_x           111.89141
-## gyros_belt_z          211.16606
-## magnet_arm_x          411.15002
-## magnet_arm_y          217.78089
-## magnet_belt_y         595.99902
-## magnet_belt_z         508.59807
-## magnet_dumbbell_x     449.51538
-## magnet_dumbbell_y     920.35027
-## magnet_dumbbell_z    1269.87669
-## magnet_forearm_x      434.78764
-## magnet_forearm_y      227.05938
-## magnet_forearm_z      393.27177
-## pitch_belt           1311.57159
-## pitch_dumbbell        100.54056
-## pitch_forearm        1604.48816
-## roll_arm              242.70396
-## roll_belt            2030.62173
-## roll_dumbbell         626.15666
-## roll_forearm         1559.53624
-## total_accel_belt      527.19820
-## total_accel_dumbbell  288.92918
-## yaw_arm               594.58245
-## yaw_belt             1373.34328
+## accel_arm_x           531.21356
+## accel_belt_y          101.00553
+## accel_belt_z          758.91569
+## accel_dumbbell_x      181.75745
+## accel_dumbbell_y     1118.17868
+## accel_dumbbell_z      255.09470
+## accel_forearm_x       852.12501
+## accel_forearm_z        99.09072
+## gyros_arm_x           107.90178
+## gyros_belt_z          259.03108
+## magnet_arm_x          393.82054
+## magnet_arm_y          231.10671
+## magnet_belt_y         599.60049
+## magnet_belt_z         506.28553
+## magnet_dumbbell_x     543.06484
+## magnet_dumbbell_y     893.41424
+## magnet_dumbbell_z    1407.13894
+## magnet_forearm_x      374.20820
+## magnet_forearm_y      233.34412
+## magnet_forearm_z      394.99445
+## pitch_belt           1357.18867
+## pitch_dumbbell        180.55760
+## pitch_forearm        1821.33166
+## roll_arm              235.22637
+## roll_belt            2024.30353
+## roll_dumbbell         542.23879
+## roll_forearm         1518.87576
+## total_accel_belt      518.92155
+## total_accel_dumbbell  280.92480
+## yaw_arm               838.41989
+## yaw_belt             1682.19394
 ## gyros_belt_x            0.00000
 ## gyros_belt_y            0.00000
 ## accel_belt_x            0.00000
@@ -504,6 +503,7 @@ confusionMatrix(predict_rpart, testing$classe)</code></pre>
 ## total_accel_arm         0.00000
 ## gyros_arm_y             0.00000
 ## gyros_arm_z             0.00000
+## accel_arm_y             0.00000
 ## accel_arm_z             0.00000
 ## magnet_arm_z            0.00000
 ## yaw_dumbbell            0.00000
@@ -564,11 +564,11 @@ confusionMatrix(predict_rf, testing$classe)</code></pre>
 ## 
 ##           Reference
 ## Prediction    A    B    C    D    E
-##          A 1673    7    0    0    0
-##          B    0 1129    5    0    0
-##          C    0    3 1021    6    0
+##          A 1673    8    0    0    0
+##          B    1 1127    3    0    0
+##          C    0    4 1023    5    0
 ##          D    0    0    0  958    0
-##          E    1    0    0    0 1082
+##          E    0    0    0    1 1082
 ## 
 ## Overall Statistics
 ##                                           
@@ -584,14 +584,14 @@ confusionMatrix(predict_rf, testing$classe)</code></pre>
 ## Statistics by Class:
 ## 
 ##                      Class: A Class: B Class: C Class: D Class: E
-## Sensitivity            0.9994   0.9912   0.9951   0.9938   1.0000
-## Specificity            0.9983   0.9989   0.9981   1.0000   0.9998
-## Pos Pred Value         0.9958   0.9956   0.9913   1.0000   0.9991
-## Neg Pred Value         0.9998   0.9979   0.9990   0.9988   1.0000
+## Sensitivity            0.9994   0.9895   0.9971   0.9938   1.0000
+## Specificity            0.9981   0.9992   0.9981   1.0000   0.9998
+## Pos Pred Value         0.9952   0.9965   0.9913   1.0000   0.9991
+## Neg Pred Value         0.9998   0.9975   0.9994   0.9988   1.0000
 ## Prevalence             0.2845   0.1935   0.1743   0.1638   0.1839
-## Detection Rate         0.2843   0.1918   0.1735   0.1628   0.1839
-## Detection Prevalence   0.2855   0.1927   0.1750   0.1628   0.1840
-## Balanced Accuracy      0.9989   0.9951   0.9966   0.9969   0.9999</code></pre>
+## Detection Rate         0.2843   0.1915   0.1738   0.1628   0.1839
+## Detection Prevalence   0.2856   0.1922   0.1754   0.1628   0.1840
+## Balanced Accuracy      0.9988   0.9943   0.9976   0.9969   0.9999</code></pre>
 </div>
 <div id="prediction-for-test-results" class="section level2">
 <h2>Prediction for Test Results</h2>
